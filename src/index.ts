@@ -11,9 +11,9 @@ interface ApiClientConfig {
  * A wrapper class for making API calls using fetch with token-based authentication.
  */
 export default class ApiClient {
-  private static token: string | null = null;
-  private static baseUrl: string = "";
-  private static baseOptions: HeadersInit = {};
+  private token: string | null = null;
+  private baseUrl: string = "";
+  private baseOptions: HeadersInit = {};
 
   /**
    * Initializes the ApiClient with a token and base URL.
@@ -21,7 +21,7 @@ export default class ApiClient {
    * @param baseUrl - The base URL for API endpoints.
    * @param baseOptions - Default headers to include in every request.
    */
-  static init(config: ApiClientConfig): void {
+  constructor(config: ApiClientConfig) {
     this.token = config.token || null;
     this.baseUrl = config.baseUrl || "";
     this.baseOptions = config.baseOptions || {};
@@ -36,7 +36,7 @@ export default class ApiClient {
    * @returns The response parsed as JSON.
    * @throws Will throw an error if the response status is not OK.
    */
-  private static async request<R, T = unknown>(
+  private async request<R, T = unknown>(
     method: RequestMethod,
     endpoint: string,
     data?: T,
@@ -93,7 +93,7 @@ export default class ApiClient {
    * @param customHeaders - Additional headers to include in the request.
    * @returns The response parsed as JSON.
    */
-  static async get<R>(
+  public async get<R>(
     endpoint: string,
     customHeaders?: HeadersInit
   ): Promise<R> {
@@ -107,7 +107,7 @@ export default class ApiClient {
    * @param customHeaders - Additional headers to include in the request.
    * @returns The response parsed as JSON.
    */
-  static async post<R, T>(
+  public async post<R, T>(
     endpoint: string,
     data: T,
     customHeaders?: HeadersInit
@@ -122,7 +122,7 @@ export default class ApiClient {
    * @param customHeaders - Additional headers to include in the request.
    * @returns The response parsed as JSON.
    */
-  static async put<R, T>(
+  public async put<R, T>(
     endpoint: string,
     data: T,
     customHeaders?: HeadersInit
@@ -136,7 +136,7 @@ export default class ApiClient {
    * @param customHeaders - Additional headers to include in the request.
    * @returns The response parsed as JSON.
    */
-  static async delete<R>(
+  public async delete<R>(
     endpoint: string,
     customHeaders?: HeadersInit
   ): Promise<R> {
